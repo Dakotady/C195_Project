@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -30,12 +31,16 @@ public class Main extends Application implements Initializable {
 
 
     public static void main(String[] args) {
+
+        LanguagePack.setLanguage(Locale.FRENCH);
+
         launch(args);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println("This worked.");
+        System.out.println(LanguagePack.getTranslation("Hello"));
+
     }
 }
