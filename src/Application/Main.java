@@ -1,5 +1,6 @@
 package Application;
 
+import Connections.JavaDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,15 +33,19 @@ public class Main extends Application implements Initializable {
 
     public static void main(String[] args) {
 
-        LanguagePack.setLanguage(Locale.FRENCH);
+        JavaDBC.openConnection();
 
+        JavaDBC.closeConnection();
+
+
+        System.out.println("Hello");
         launch(args);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println(LanguagePack.getTranslation("Hello"));
+
 
     }
 }
