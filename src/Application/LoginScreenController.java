@@ -3,15 +3,17 @@ package Application;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginScreen implements Initializable {
+public class LoginScreenController implements Initializable {
 
     public Text zoneID;
+    public Button exitApplication;
 
     @FXML
 

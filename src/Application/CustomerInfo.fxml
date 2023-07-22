@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.CustomerInfoController">
    <Text layoutX="31.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID" textAlignment="RIGHT"/>
    <TextField fx:id="customerID" disable="true" editable="false" layoutX="115.0" layoutY="36.0" prefHeight="25.0"
               prefWidth="66.0"/>

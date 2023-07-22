@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-            prefWidth="1600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <TableView fx:id="appointmentTable" layoutX="25.0" layoutY="23.0" prefHeight="600.0" prefWidth="1550.0">
+            prefWidth="1600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.MainScreenController">
+<TableView fx:id="appointmentTable" layoutX="25.0" layoutY="23.0" prefHeight="600.0" prefWidth="1550.0">
       <columns>
           <TableColumn fx:id="appointment_ID_Col" prefWidth="105.0" text="Appointment_ID"/>
           <TableColumn fx:id="title_Col" prefWidth="259.0" text="Title"/>

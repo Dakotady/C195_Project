@@ -6,7 +6,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class AppointmentInfo {
+public class AppointmentInfoController {
     public TextField appointmentIDText;
     public ComboBox contact;
     public TextField title;

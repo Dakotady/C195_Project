@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="265.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LoginScreen">
+<AnchorPane prefHeight="265.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LoginScreenController">
    <TextField layoutX="110.0" layoutY="48.0" />
    <Text layoutX="33.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName" wrappingWidth="63.4765625" />
    <TextField layoutX="110.0" layoutY="82.0" />
