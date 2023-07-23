@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="265.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LoginScreen">
+<AnchorPane prefHeight="265.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LoginScreenController">
    <TextField layoutX="110.0" layoutY="48.0" />
    <Text layoutX="33.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName" wrappingWidth="63.4765625" />
    <TextField layoutX="110.0" layoutY="82.0" />
    <Text layoutX="33.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="63.4765625" />
    <Text layoutX="37.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Zone" />
    <Text id="zoneID" fx:id="zoneID" layoutX="16.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Display Time Zone" textAlignment="CENTER" />
-   <Button layoutX="207.0" layoutY="129.0" mnemonicParsing="false" text="Login" />
+   <Button fx:id="login" layoutX="207.0" layoutY="129.0" mnemonicParsing="false" onAction="#loginOnClicked" text="Login" />
    <Button fx:id="exitApplication" layoutX="219.0" layoutY="237.0" mnemonicParsing="false" onAction="#exitApplicationOnClicked" prefHeight="25.0" prefWidth="40.0" text="Exit" />
 </AnchorPane>

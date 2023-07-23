@@ -1,10 +1,10 @@
 package Application;
 
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class ReportsController {
     public ComboBox months;
@@ -21,4 +21,11 @@ public class ReportsController {
     public ComboBox contact;
     public DatePicker datePicker;
     public Text totalFailedLogins;
+    public Button back;
+
+    public void backOnClicked(ActionEvent actionEvent) throws IOException {
+
+        new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+
+    }
 }

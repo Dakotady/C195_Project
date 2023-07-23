@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -23,7 +24,7 @@ public class Main extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginScreen.fxml")));
         primaryStage.setTitle("Appointment Manager");
         primaryStage.setScene(new Scene(root, 325, 265));
         primaryStage.show();
