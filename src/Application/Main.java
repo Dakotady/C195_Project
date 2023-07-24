@@ -38,8 +38,20 @@ public class Main extends Application implements Initializable {
 
         JavaDBC.closeConnection();
 
+        Locale French = new Locale("fr", "FR");
 
-        System.out.println("Hello");
+        //Locale.setDefault(French);
+
+
+
+        if ((Locale.getDefault().toString()).equals("fr_FR")) {
+            ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
+
+            System.out.println(rb.getString("Hello"));
+        }
+
+        System.out.println((Locale.getDefault().toString()));
+
         launch(args);
     }
 
