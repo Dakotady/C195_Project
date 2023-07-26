@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="265.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LoginScreenController">
-   <TextField layoutX="110.0" layoutY="48.0" />
-   <Text fx:id="userNameText" layoutX="24.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName" wrappingWidth="82.4765625" />
-   <TextField layoutX="110.0" layoutY="82.0" />
+   <TextField fx:id="UsernameTextField" layoutX="110.0" layoutY="48.0" />
+   <Text fx:id="userNameText" layoutX="24.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="82.4765625" />
+   <TextField fx:id="PasswordTextField" layoutX="110.0" layoutY="82.0" />
    <Text fx:id="passwordText" layoutX="23.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="82.4765625" />
    <Text fx:id="timezoneText" layoutX="17.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timezone" wrappingWidth="97.60546875" />
    <Text id="zoneID" fx:id="zoneID" layoutX="16.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Display Time Zone" textAlignment="CENTER" />

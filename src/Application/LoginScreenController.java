@@ -7,7 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,6 +28,8 @@ public class LoginScreenController implements Initializable {
     public Text userNameText;
     public Text passwordText;
     public Text timezoneText;
+    public TextField UsernameTextField;
+    public TextField PasswordTextField;
 
     @FXML
 
@@ -51,6 +55,18 @@ public class LoginScreenController implements Initializable {
     }
 
     public void loginOnClicked(ActionEvent actionEvent) throws IOException {
+
+        if (UsernameTextField.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            if ((Locale.getDefault().toString()).equals("fr_FR")){
+                ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
+                alert.setContentText(rb.getString("Please") + " " + rb.getString("Populate") + " " + rb.getString("a") + " " + rb.getString("Username") + " " + rb.getString("to") + " " + rb.getString("continue"));
+            }
+            else {
+                alert.setContentText("Please populate a Username to continue.");
+            }
+            alert.showAndWait();
+        }
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
