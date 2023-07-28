@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -54,26 +55,64 @@ public class LoginScreenController implements Initializable {
         }
     }
 
-    public void loginOnClicked(ActionEvent actionEvent) throws IOException {
+    public void loginOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
+
+        Boolean error = false;
+        int loginValidation;
 
         if (UsernameTextField.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             if ((Locale.getDefault().toString()).equals("fr_FR")){
                 ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
-                alert.setContentText(rb.getString("Please") + " " + rb.getString("Populate") + " " + rb.getString("a") + " " + rb.getString("Username") + " " + rb.getString("to") + " " + rb.getString("continue"));
+                alert.setContentText(rb.getString("Please") + " " + rb.getString("populate") + " " + rb.getString("a") + " " + rb.getString("Username") + " " + rb.getString("to") + " " + rb.getString("continue"));
             }
             else {
                 alert.setContentText("Please populate a Username to continue.");
             }
             alert.showAndWait();
+            error = true;
+        }
+        if (PasswordTextField.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            if ((Locale.getDefault().toString()).equals("fr_FR")){
+                ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
+                alert.setContentText(rb.getString("Please") + " " + rb.getString("populate") + " " + rb.getString("a") + " " + rb.getString("Password") + " " + rb.getString("to") + " " + rb.getString("continue"));
+            }
+            else {
+                alert.setContentText("Please populate a Password to continue.");
+            }
+            alert.showAndWait();
+            error = true;
         }
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene addPart = new Scene(root, 1600, 800);
-        stage.setTitle("");
-        stage.setScene(addPart);
-        stage.show();
+        if (error.equals(false)){
 
+            String username = UsernameTextField.getText();
+            String password = PasswordTextField.getText();
+
+            loginValidation = sqlCommands.LoginValidation(username, password);
+
+            //System.out.println(loginValidation);
+
+            //Put in translations and alerts for login value pass login value to Main to store for future use.
+            if (loginValidation == -2){
+
+
+
+            }
+
+        }
+
+
+/*
+        if (error.equals(false)) {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene addPart = new Scene(root, 1600, 800);
+            stage.setTitle("");
+            stage.setScene(addPart);
+            stage.show();
+        }
+*/
     }
 }
