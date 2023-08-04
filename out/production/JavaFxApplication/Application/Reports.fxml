@@ -39,4 +39,6 @@
     <Text layoutX="1200.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Failed Login Attempts: " />
    <Line endX="183.0" endY="209.5" layoutX="1317.0" layoutY="13.0" startX="-162.5" startY="209.49998474121094" />
    <Button fx:id="back" layoutX="1424.0" layoutY="460.0" mnemonicParsing="false" onAction="#backOnClicked" text="Back" />
+   <Line endX="1400.0" layoutX="100.0" layoutY="500.0" startX="-100.0" />
+   <Line endX="149.5" endY="373.5" layoutX="1351.0" layoutY="126.0" startX="149.0" startY="-126.0" />
 </AnchorPane>

@@ -1,6 +1,5 @@
 package Application;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,6 +29,11 @@ public class LoginScreenController implements Initializable {
     public Text timezoneText;
     public TextField UsernameTextField;
     public TextField PasswordTextField;
+
+    public int userID;
+    public String username;
+    public String password;
+
 
     @FXML
 
@@ -87,32 +90,63 @@ public class LoginScreenController implements Initializable {
 
         if (error.equals(false)){
 
-            String username = UsernameTextField.getText();
-            String password = PasswordTextField.getText();
+            username = UsernameTextField.getText();
+            password = PasswordTextField.getText();
 
             loginValidation = sqlCommands.LoginValidation(username, password);
 
             //System.out.println(loginValidation);
 
-            //Put in translations and alerts for login value pass login value to Main to store for future use.
+            //validates if the username/password is correct, and saves the userID for later
             if (loginValidation == -2){
-
-
-
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if ((Locale.getDefault().toString()).equals("fr_FR")){
+                    ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
+                    alert.setContentText(rb.getString("Incorrect") + " " + rb.getString("Username"));
+                }
+                else {
+                    alert.setContentText("Incorrect Username.");
+                }
+                alert.showAndWait();
+                error = true;
             }
+            else if (loginValidation == -1){
 
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if ((Locale.getDefault().toString()).equals("fr_FR")){
+                    ResourceBundle rb = ResourceBundle.getBundle("Application/Lang", Locale.getDefault());
+                    alert.setContentText(rb.getString("Incorrect") + " " + rb.getString("Password"));
+                }
+                else {
+                    alert.setContentText("Incorrect Password.");
+                }
+                alert.showAndWait();
+                error = true;
+            }
+            else{
+                userID = loginValidation;
+            }
         }
 
+        // opens MainScreen if validation passes.
+        if (error.equals(false)) {
+
+            //sets users information
+            Main.setUserInfo(username, userID);
+
+            new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
 
 /*
-        if (error.equals(false)) {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Scene addPart = new Scene(root, 1600, 800);
             stage.setTitle("");
             stage.setScene(addPart);
+            stage.setFullScreen(true);
             stage.show();
+
+ */
         }
-*/
+
     }
 }

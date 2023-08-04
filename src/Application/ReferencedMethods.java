@@ -19,6 +19,11 @@ public class ReferencedMethods {
         Scene addPart = new Scene(root, width, height);
         stage.setTitle("");
         stage.setScene(addPart);
+
+        if (fxml.equals("MainScreen.fxml") || fxml.equals("Reports.fxml")){
+            stage.setFullScreen(true);
+        }
+
         stage.show();
 
     }

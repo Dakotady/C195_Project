@@ -2,6 +2,7 @@ package Application;
 
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -9,8 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AppointmentInfoController {
+public class AppointmentInfoController implements Initializable {
     public TextField appointmentIDText;
     public TextField title;
     public TextField description;
@@ -22,10 +25,9 @@ public class AppointmentInfoController {
     public Button cancel;
     public ComboBox startTime;
     public ComboBox endTime;
-    public ComboBox userID;
-    public Text userName;
     public Button confirm;
     public TextField locationText;
+    public TextField userID;
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
 
@@ -36,5 +38,10 @@ public class AppointmentInfoController {
 
         new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        userID.setText(Integer.toString(Main.getUserID()));
     }
 }
