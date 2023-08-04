@@ -22,17 +22,17 @@ public class CustomerOverviewController {
 
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
     }
 
     public void addCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "CustomerInfo.fxml", 600, 300);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
     }
 
     public void modifyCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "CustomerInfo.fxml", 600, 300);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
     }
 
     public void deleteCustomerOnClicked(ActionEvent actionEvent) {

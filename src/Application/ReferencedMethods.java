@@ -20,7 +20,7 @@ public class ReferencedMethods {
         stage.setTitle("");
         stage.setScene(addPart);
 
-        if (fxml.equals("MainScreen.fxml") || fxml.equals("Reports.fxml")){
+        if (fxml.equals("/FxmlScreens/MainScreen.fxml") || fxml.equals("/FxmlScreens/Reports.fxml")){
             stage.setFullScreen(true);
         }
 

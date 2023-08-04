@@ -31,12 +31,12 @@ public class AppointmentInfoController implements Initializable {
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
     }
 
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 
     }
 

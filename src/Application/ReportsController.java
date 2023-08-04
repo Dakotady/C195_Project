@@ -25,7 +25,7 @@ public class ReportsController {
 
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 
     }
 }

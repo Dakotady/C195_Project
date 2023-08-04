@@ -134,7 +134,7 @@ public class LoginScreenController implements Initializable {
             //sets users information
             Main.setUserInfo(username, userID);
 
-            new ReferencedMethods().newStage(actionEvent, "MainScreen.fxml", 1600, 800);
+            new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 
 /*
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));

@@ -45,7 +45,7 @@ public class Main extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginScreen.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FxmlScreens/LoginScreen.fxml")));
         primaryStage.setTitle("Appointment Manager");
         primaryStage.setScene(new Scene(root, 325, 265));
         primaryStage.show();
@@ -55,9 +55,6 @@ public class Main extends Application implements Initializable {
 
     public static void main(String[] args) {
 
-        JavaDBC.openConnection();
-
-        JavaDBC.closeConnection();
 
         Locale French = new Locale("fr", "FR");
 

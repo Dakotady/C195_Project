@@ -44,13 +44,13 @@ public class MainScreenController implements Initializable {
 
     public void addAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "AppointmentInfo.fxml", 600, 500);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
 
     }
 
     public void modifyAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
-       new ReferencedMethods().newStage(actionEvent, "AppointmentInfo.fxml", 600, 500);
+       new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
 
     }
 
@@ -59,13 +59,13 @@ public class MainScreenController implements Initializable {
 
     public void customerListOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "CustomerOverview.fxml", 700, 550);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
 
     }
 
     public void reportsOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "Reports.fxml", 1500, 500);
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/Reports.fxml", 1500, 500);
     }
 
     public void appointmentFilterWeekOnClicked(ActionEvent actionEvent) {
