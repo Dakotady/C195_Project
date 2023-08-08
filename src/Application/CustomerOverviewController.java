@@ -1,13 +1,17 @@
 package Application;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CustomerOverviewController {
+public class CustomerOverviewController implements Initializable {
     public TableView customerTable;
     public TableColumn customerID_Col;
     public TableColumn name_Col;
@@ -21,6 +25,8 @@ public class CustomerOverviewController {
     public Button back;
 
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
+
+        ListModifications.clearAppointments();
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
     }
@@ -36,6 +42,21 @@ public class CustomerOverviewController {
     }
 
     public void deleteCustomerOnClicked(ActionEvent actionEvent) {
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+        customerID_Col.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("customerID"));
+        name_Col.setCellValueFactory(new PropertyValueFactory<Customers, String>("customerName"));
+        phone_Col.setCellValueFactory(new PropertyValueFactory<Customers, String>("phoneNum"));
+        address_Col.setCellValueFactory(new PropertyValueFactory<Customers, String>("address"));
+        postalCode_Col.setCellValueFactory(new PropertyValueFactory<Customers, String>("postalCode"));
+        divisionID_Col.setCellValueFactory(new PropertyValueFactory<Customers, Integer>("divisionID"));
+        customerTable.setItems(ListModifications.getAllCustomers());
+
 
     }
 }

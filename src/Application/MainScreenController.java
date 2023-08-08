@@ -79,40 +79,29 @@ public class MainScreenController implements Initializable {
 
 
         try {
-
             sqlCommands.populateAppointments();
-
         } catch (SQLException Issue) {
             Issue.printStackTrace();
         }
 
- /*
-        Timestamp test = new Timestamp(System.currentTimeMillis());
 
-        Appointments temp = new Appointments(1, "test title", "test des", "test loc",
-                "test type", test, test, test, "test createdby", test, "test lastupdatedby", 1,
-                2, 3);
-
-        ListModifications.addAppointment(temp);
-
-  */
-
+        try {
+            sqlCommands.populateCustomers();
+        } catch (SQLException Issue) {
+            Issue.printStackTrace();
+        }
 
         appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
         title_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("title"));
         description_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("description"));
         location_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("location"));
-        contact_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("contact"));
+        contact_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("contactID"));
         type_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("type"));
         startDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("start"));
         endDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("end"));
         customer_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("customerID"));
         user_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("userID"));
         appointmentTable.setItems(ListModifications.getAllAppointments());
-
-
-
-
     }
 
     public void appointmentAllOnClicked(ActionEvent actionEvent) {

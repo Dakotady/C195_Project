@@ -30,13 +30,17 @@ public class AppointmentInfoController implements Initializable {
     public TextField userID;
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
+        ListModifications.clearAppointments();
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+
     }
 
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException {
+        ListModifications.clearAppointments();
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+
 
     }
 

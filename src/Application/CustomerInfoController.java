@@ -21,10 +21,12 @@ public class CustomerInfoController {
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException {
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+
     }
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+
     }
 }

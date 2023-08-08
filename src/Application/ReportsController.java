@@ -24,6 +24,7 @@ public class ReportsController {
     public Button back;
 
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
+        ListModifications.clearAppointments();
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 
