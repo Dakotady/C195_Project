@@ -135,4 +135,61 @@ public abstract class sqlCommands {
 
     }
 
+    public static void populateCountries() throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Select Country From Countries";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            String country = rs.getString("Country");
+
+            ListModifications.addCountry(country);
+        }
+
+        JavaDBC.closeConnection();
+
+    }
+
+    public static int getCountryCode(String country) throws SQLException {
+        int value = 0;
+
+        JavaDBC.openConnection();
+
+        String sql = "Select Country_ID From countries Where Country = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, country);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            value = rs.getInt("Country_ID");
+        }
+
+        JavaDBC.closeConnection();
+
+        return value;
+    }
+
+    public static void populateDivisions(int countryID) throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Select Division From first_level_divisions Where Country_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, countryID);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            String division = rs.getString("Division");
+
+            ListModifications.addDivisions(division);
+        }
+
+        JavaDBC.closeConnection();
+
+    }
+
 }

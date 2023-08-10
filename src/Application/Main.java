@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Objects;
@@ -69,6 +70,7 @@ public class Main extends Application implements Initializable {
         }
 
         System.out.println((Locale.getDefault().toString()));
+
 
         launch(args);
     }
