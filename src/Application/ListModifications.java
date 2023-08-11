@@ -14,6 +14,7 @@ public class ListModifications {
     private static final ObservableList<String> allDivisions = FXCollections.observableArrayList();
 
 
+
     public static void clearAppointments(){
         allAppointments.clear();
     }
@@ -54,7 +55,7 @@ public class ListModifications {
         return allCountries;
     }
 
-    public static ObservableList<String> getAllDivisions() { return  allDivisions; }
+    public static ObservableList<String> getAllDivisions() { return allDivisions; }
 
 
 }

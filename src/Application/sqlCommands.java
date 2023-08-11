@@ -192,4 +192,81 @@ public abstract class sqlCommands {
 
     }
 
+    public static void convertDivisionID(int divisionID) throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Select * From first_level_divisions Where Division_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, divisionID);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            ReferencedMethods.setState(rs.getString("Division"));
+            ReferencedMethods.setCountryID(rs.getInt("Country_ID"));
+        }
+
+        sql = "Select * From countries Where Country_ID = ?";
+        ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, ReferencedMethods.getCountryID());
+        rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            ReferencedMethods.setCountry(rs.getString("Country"));
+        }
+
+        JavaDBC.closeConnection();
+    }
+
+    public static int getDivisionID(String state, String country) throws SQLException {
+
+        int countryID = getCountryCode(country);
+        int divisionID = 0;
+
+        JavaDBC.openConnection();
+
+        String sql = "Select * From first_level_divisions Where Country_ID = ? And Division = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, countryID);
+        ps.setString(2, state);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            divisionID = rs.getInt("Division_ID");
+        }
+
+        JavaDBC.closeConnection();
+
+        return divisionID;
+    }
+
+    public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phoneNum, String state,
+                                      String country) throws SQLException {
+
+        int divisionID = getDivisionID(state, country);
+        Timestamp time = ReferencedMethods.getCurrentLocalTime();
+        String user = ReferencedMethods.getUserName();
+
+        JavaDBC.openConnection();
+
+        String sql = "Update customers Set Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, Last_Updated_By = ? " +
+                ", Division_ID = ? Where Customer_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, customerName);
+        ps.setString(2, address);
+        ps.setString(3, postalCode);
+        ps.setString(4, phoneNum);
+        ps.setTimestamp(5, time);
+        ps.setString(6, user);
+        ps.setInt(7, divisionID);
+        ps.setInt(8, customerID);
+
+        int rowAffected = ps.executeUpdate();
+
+        return rowAffected;
+    }
+
 }

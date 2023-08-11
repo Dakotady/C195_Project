@@ -18,31 +18,7 @@ import java.util.TimeZone;
 
 public class Main extends Application implements Initializable {
 
-    public static String username;
-    public static int userID;
 
-    public static void setUserInfo(String Username, int UserID){
-
-        username = Username;
-        userID = UserID;
-
-    }
-
-    public static String getUserName(){
-
-        return username;
-    }
-
-    public static int getUserID(){
-
-        return userID;
-    }
-
-
-    public static ZoneId getLocalUTC(){
-        TimeZone timeZone = TimeZone.getDefault();
-        return timeZone.toZoneId();
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{

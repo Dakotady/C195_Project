@@ -2,6 +2,7 @@ package Application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +25,7 @@ public class CustomerOverviewController implements Initializable {
     public Button deleteCustomer;
     public Button back;
 
+
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
 
         ListModifications.clearAppointments();
@@ -38,7 +40,21 @@ public class CustomerOverviewController implements Initializable {
 
     public void modifyCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
+        Customers selected = (Customers) customerTable.getSelectionModel().getSelectedItem();
+        ReferencedMethods.setSelectedCustomer(selected);
+
+        if (selected == null){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No customer has been selected. Please select a customer to modify.");
+            alert.showAndWait();
+        } else {
+
+            ReferencedMethods.setFormState("modify");
+            new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
+        }
+
+
     }
 
     public void deleteCustomerOnClicked(ActionEvent actionEvent) {

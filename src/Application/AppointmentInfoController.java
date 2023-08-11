@@ -46,6 +46,8 @@ public class AppointmentInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userID.setText(Integer.toString(Main.getUserID()));
+
+        // redue this and screen i feel like this is modifiable. and should pull from the database when modified. !!!!!!!!!!!!!!!!!!!!!!!!!!
+        userID.setText(Integer.toString(ReferencedMethods.getUserID()));
     }
 }

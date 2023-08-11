@@ -43,7 +43,7 @@ public class LoginScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        zoneID.setText(Main.getLocalUTC().getId().toString());
+        zoneID.setText(ReferencedMethods.getLocalUTC().getId().toString());
 
         if ((Locale.getDefault().toString()).equals("fr_FR")){
 
@@ -132,7 +132,7 @@ public class LoginScreenController implements Initializable {
         if (error.equals(false)) {
 
             //sets users information
-            Main.setUserInfo(username, userID);
+            ReferencedMethods.setUserInfo(username, userID);
 
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 
