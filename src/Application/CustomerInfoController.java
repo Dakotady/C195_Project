@@ -3,10 +3,7 @@ package Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,27 +23,56 @@ public class CustomerInfoController implements Initializable {
 
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
-       int update = sqlCommands.updateCustomer(Integer.parseInt(customerID.getText()), customerName.getText(), customerAddress.getText(), postalCode.getText(),
-                phoneNumber.getText(), state.getValue().toString(), country.getValue().toString());
+        if (ReferencedMethods.getFormState().equals("add")){
 
-        if (update > 0) {
+            int add = sqlCommands.addCustomer(customerName.getText(), customerAddress.getText(), postalCode.getText(), phoneNumber.getText(),
+                    state.getValue().toString(), country.getValue().toString());
 
-            ListModifications.clearCustomers();
-            sqlCommands.populateCustomers();
+            if (add > 0) {
+                ListModifications.clearCustomers();
+                sqlCommands.populateCustomers();
 
-            new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("The customer did not update properly");
-            alert.showAndWait();
+                new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("The customer did not add properly. Please validate all the fields have been populated correctly.");
+                alert.showAndWait();
+            }
         }
+
+      if (ReferencedMethods.getFormState().equals("modify")) {
+          int update = sqlCommands.updateCustomer(Integer.parseInt(customerID.getText()), customerName.getText(), customerAddress.getText(),
+                  postalCode.getText(), phoneNumber.getText(), state.getValue().toString(), country.getValue().toString());
+
+          if (update > 0) {
+
+              ListModifications.clearCustomers();
+              sqlCommands.populateCustomers();
+
+              new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+          } else {
+              Alert alert = new Alert(Alert.AlertType.ERROR);
+              alert.setContentText("The customer did not update properly. Please validate all the fields have been populated correctly.");
+              alert.showAndWait();
+          }
+      }
 
     }
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+        boolean response;
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Do you wish to exit without saving?");
+        alert.setContentText("Choose Ok to continue or Cancel to continue.");
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        response = result == ButtonType.OK;
+
+        if (response) {
+
+            new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+        }
     }
 
 

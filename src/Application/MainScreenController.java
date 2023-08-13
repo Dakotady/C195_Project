@@ -1,5 +1,6 @@
 package Application;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -69,14 +70,68 @@ public class MainScreenController implements Initializable {
     }
 
     public void appointmentFilterWeekOnClicked(ActionEvent actionEvent) {
+
+        Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
+
+        FilteredList<Appointments> filteredAppointments = new FilteredList<>(ListModifications.getAllAppointments(),
+                i-> i.start.toLocalDateTime().getDayOfYear() >=  currentTime.toLocalDateTime().getDayOfYear() && i.start.toLocalDateTime().getDayOfYear()
+                        <= currentTime.toLocalDateTime().getDayOfYear() + 7 && i.start.toLocalDateTime().getYear() == currentTime.toLocalDateTime().getYear());
+
+        appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
+        title_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("title"));
+        description_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("description"));
+        location_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("location"));
+        contact_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("contactID"));
+        type_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("type"));
+        startDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("start"));
+        endDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("end"));
+        customer_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("customerID"));
+        user_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("userID"));
+        appointmentTable.setItems(filteredAppointments);
+
     }
 
     public void appointmentFilterMonthOnClicked(ActionEvent actionEvent) {
+        Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
+
+        FilteredList<Appointments> filteredAppointments = new FilteredList<>(ListModifications.getAllAppointments(),
+                i-> i.start.toLocalDateTime().getMonth() ==  currentTime.toLocalDateTime().getMonth() && i.start.toLocalDateTime().getYear()
+                        == currentTime.toLocalDateTime().getYear());
+
+        appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
+        title_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("title"));
+        description_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("description"));
+        location_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("location"));
+        contact_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("contactID"));
+        type_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("type"));
+        startDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("start"));
+        endDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("end"));
+        customer_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("customerID"));
+        user_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("userID"));
+        appointmentTable.setItems(filteredAppointments);
+
+    }
+
+    public void appointmentAllOnClicked(ActionEvent actionEvent) {
+
+        appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
+        title_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("title"));
+        description_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("description"));
+        location_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("location"));
+        contact_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("contactID"));
+        type_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("type"));
+        startDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("start"));
+        endDateAndTime_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Timestamp>("end"));
+        customer_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("customerID"));
+        user_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("userID"));
+        appointmentTable.setItems(ListModifications.getAllAppointments());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        ListModifications.clearAppointments();
+        ListModifications.clearCustomers();
 
         try {
             sqlCommands.populateAppointments();
@@ -104,6 +159,4 @@ public class MainScreenController implements Initializable {
         appointmentTable.setItems(ListModifications.getAllAppointments());
     }
 
-    public void appointmentAllOnClicked(ActionEvent actionEvent) {
-    }
 }

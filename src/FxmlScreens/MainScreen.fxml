@@ -33,6 +33,6 @@
          <ToggleGroup fx:id="AppointmentFilter" />
       </toggleGroup>
    </RadioButton>
-   <RadioButton fx:id="appointmentFilterMonth" layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onAction="#appointmentFilterMonthOnClicked" text="Appointments filltered by month" toggleGroup="$AppointmentFilter" />
+   <RadioButton fx:id="appointmentFilterMonth" layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onAction="#appointmentFilterMonthOnClicked" text="Appointments filltered by this month" toggleGroup="$AppointmentFilter" />
    <RadioButton fx:id="appointmentAll" layoutX="25.0" layoutY="55.0" mnemonicParsing="false" onAction="#appointmentAllOnClicked" selected="true" text="All Appointments" toggleGroup="$AppointmentFilter" />
 </AnchorPane>

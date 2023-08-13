@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.TimeZone;
 
@@ -50,7 +51,6 @@ public class ReferencedMethods {
 
     public static Timestamp getCurrentLocalTime(){
         Timestamp localTime = new Timestamp(System.currentTimeMillis());
-
         return localTime;
     }
 
@@ -118,6 +118,24 @@ public class ReferencedMethods {
 
         stage.show();
 
+    }
+
+    public static Boolean checkCustomerToAppointment(Customers customer){
+
+        Boolean value = false;
+        int customerID;
+
+        customerID = customer.customerID;
+
+        for (Appointments appointment : ListModifications.getAllAppointments()) {
+
+            if (appointment.customerID == customerID) {
+                value = true;
+                break;
+            }
+        }
+
+        return value;
     }
 
 

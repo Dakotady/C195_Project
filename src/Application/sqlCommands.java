@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -264,9 +265,53 @@ public abstract class sqlCommands {
         ps.setInt(7, divisionID);
         ps.setInt(8, customerID);
 
-        int rowAffected = ps.executeUpdate();
+        int affectedRows = ps.executeUpdate();
+        JavaDBC.closeConnection();
 
-        return rowAffected;
+        return affectedRows;
     }
 
+
+    public static int addCustomer(String customerName, String address, String postalCode, String phoneNum, String state,
+                                  String country) throws SQLException{
+
+        int divisionID = getDivisionID(state, country);
+        Timestamp time = ReferencedMethods.getCurrentLocalTime();
+        String user = ReferencedMethods.getUserName();
+
+        JavaDBC.openConnection();
+
+        String sql = "Insert into customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
+                "Values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, customerName);
+        ps.setString(2, address);
+        ps.setString(3, postalCode);
+        ps.setString(4, phoneNum);
+        ps.setTimestamp(5, time);
+        ps.setString(6, user);
+        ps.setTimestamp(7, time);
+        ps.setString(8, user);
+        ps.setInt(9, divisionID);
+
+        int affectedRows = ps.executeUpdate();
+        JavaDBC.closeConnection();
+
+        return affectedRows;
+    }
+
+    public static int deleteCustomer(int customerID) throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Delete From customers Where Customer_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerID);
+        int affectedRows = ps.executeUpdate();
+
+        JavaDBC.closeConnection();
+
+        return affectedRows;
+    }
 }

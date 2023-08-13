@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerOverviewController implements Initializable {
@@ -28,13 +29,12 @@ public class CustomerOverviewController implements Initializable {
 
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
 
-        ListModifications.clearAppointments();
-
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
     }
 
     public void addCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
+        ReferencedMethods.setFormState("add");
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
     }
 
@@ -57,7 +57,31 @@ public class CustomerOverviewController implements Initializable {
 
     }
 
-    public void deleteCustomerOnClicked(ActionEvent actionEvent) {
+    public void deleteCustomerOnClicked(ActionEvent actionEvent) throws SQLException {
+
+        Boolean customerExist;
+
+        Customers selected = (Customers) customerTable.getSelectionModel().getSelectedItem();
+        ReferencedMethods.setSelectedCustomer(selected);
+
+        customerExist = ReferencedMethods.checkCustomerToAppointment(selected);
+
+        if (customerExist){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("The customer cannot be deleted because it is tied to a appointment");
+            alert.showAndWait();
+        }else {
+
+            sqlCommands.deleteCustomer(selected.customerID);
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("the following customer has been deleted: " + selected.customerName);
+            alert.showAndWait();
+
+            ListModifications.getAllCustomers().remove(selected);
+        }
+
 
     }
 
