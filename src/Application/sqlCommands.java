@@ -5,6 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,6 +99,7 @@ public abstract class sqlCommands {
                 int customerID = rs.getInt("Customer_ID");
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
+
 
                Appointments appointment = new Appointments(appointmentID, title, description, location, type, start, end, create, createdBy, lastUpdated, lastUpdatedBy, customerID, userID, contactID);
 

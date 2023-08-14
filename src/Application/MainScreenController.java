@@ -45,13 +45,28 @@ public class MainScreenController implements Initializable {
 
     public void addAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
-        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
+        ReferencedMethods.setFormState("add");
 
+        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
     }
 
     public void modifyAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
-       new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
+
+        Appointments selected = (Appointments) appointmentTable.getSelectionModel().getSelectedItem();
+        ReferencedMethods.setSelectedAppointment(selected);
+
+        if (selected == null){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No Appointment has been selected. Please select a Appointment to modify.");
+            alert.showAndWait();
+        } else {
+
+            ReferencedMethods.setFormState("modified");
+            new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
+        }
+
 
     }
 

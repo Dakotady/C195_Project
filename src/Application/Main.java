@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -30,7 +32,17 @@ public class Main extends Application implements Initializable {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+
+        sqlCommands.populateAppointments();
+
+        for (Appointments appointment : ListModifications.getAllAppointments()) {
+
+            LocalDateTime localDateTime = ReferencedMethods.localTimeConversion(appointment.start);
+            System.out.println(appointment.start.toLocalDateTime().toString());
+            System.out.println(localDateTime.toString());
+            System.out.println("............");
+        }
 
 
         Locale French = new Locale("fr", "FR");

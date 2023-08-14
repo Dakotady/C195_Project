@@ -9,7 +9,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -18,6 +21,7 @@ public class ReferencedMethods {
 
 
     private static Customers selectedCustomer;
+    private static Appointments selectedAppointment;
     private static String formState;
     private static int divisionID;
     private static String state;
@@ -54,6 +58,9 @@ public class ReferencedMethods {
         return localTime;
     }
 
+    public static void setSelectedAppointment(Appointments selected){
+        selectedAppointment = selected;
+    }
 
     public static void setSelectedCustomer(Customers selected){
         selectedCustomer = selected;
@@ -77,6 +84,10 @@ public class ReferencedMethods {
 
     public static void setCountryID(int ID){
         countryID = ID;
+    }
+
+    public static Appointments getSelectedAppointment(){
+        return selectedAppointment;
     }
 
     public static Customers getSelectedCustomer(){
@@ -137,6 +148,19 @@ public class ReferencedMethods {
 
         return value;
     }
+
+    public static LocalDateTime localTimeConversion(Timestamp timestamp){
+
+        ZonedDateTime zonedDateTime = timestamp.toLocalDateTime().atZone(ZoneId.of("America/New_York"));
+
+        ZonedDateTime updatedTime = zonedDateTime.withZoneSameInstant(getLocalUTC());
+
+        LocalDateTime currentTime = updatedTime.toLocalDateTime();
+
+        return currentTime;
+    }
+
+
 
 
 }

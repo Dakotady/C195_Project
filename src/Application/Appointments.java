@@ -1,6 +1,8 @@
 package Application;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class Appointments {
