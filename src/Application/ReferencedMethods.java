@@ -200,19 +200,19 @@ public class ReferencedMethods {
         int value = 0;
 
         if (temp == 7){
-            value = 6;
+            value = 7;
         }else if (temp == 6){
-            value = 0;
-        }else if (temp == 5){
             value = 1;
-        }else if (temp == 4){
+        }else if (temp == 5){
             value = 2;
-        }else if (temp == 3){
+        }else if (temp == 4){
             value = 3;
-        }else if (temp == 2){
+        }else if (temp == 3){
             value = 4;
-        }else if (temp == 1){
+        }else if (temp == 2){
             value = 5;
+        }else if (temp == 1){
+            value = 6;
         }
 
         return value;
