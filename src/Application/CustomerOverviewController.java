@@ -2,10 +2,7 @@ package Application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -73,13 +70,18 @@ public class CustomerOverviewController implements Initializable {
             alert.showAndWait();
         }else {
 
+            Boolean response;
+
             sqlCommands.deleteCustomer(selected.customerID);
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("the following customer has been deleted: " + selected.customerName);
-            alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("are you sure you want to delete the customer " + selected.customerName);
+            ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+            response = result == ButtonType.OK;
 
-            ListModifications.getAllCustomers().remove(selected);
+            if (response) {
+                ListModifications.getAllCustomers().remove(selected);
+            }
         }
 
 

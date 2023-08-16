@@ -23,39 +23,48 @@ public class CustomerInfoController implements Initializable {
 
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
-        if (ReferencedMethods.getFormState().equals("add")){
+        if (ReferencedMethods.getFormState().equals("add")) {
+            if ((!state.getSelectionModel().isEmpty() || !country.getSelectionModel().isEmpty())
+                    && (!customerName.getText().isEmpty()) && !customerAddress.getText().isEmpty()  && !phoneNumber.getText().isEmpty()
+                    && !postalCode.getText().isEmpty()) {
 
-            int add = sqlCommands.addCustomer(customerName.getText(), customerAddress.getText(), postalCode.getText(), phoneNumber.getText(),
-                    state.getValue().toString(), country.getValue().toString());
+                int add = sqlCommands.addCustomer(customerName.getText(), customerAddress.getText(), postalCode.getText(), phoneNumber.getText(),
+                        state.getValue().toString(), country.getValue().toString());
 
-            if (add > 0) {
-                ListModifications.clearCustomers();
-                sqlCommands.populateCustomers();
+                if (add > 0) {
+                    ListModifications.clearCustomers();
+                    sqlCommands.populateCustomers();
 
-                new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
-            }else {
+                    new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+                }
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("The customer did not add properly. Please validate all the fields have been populated correctly.");
                 alert.showAndWait();
             }
         }
 
-      if (ReferencedMethods.getFormState().equals("modify")) {
-          int update = sqlCommands.updateCustomer(Integer.parseInt(customerID.getText()), customerName.getText(), customerAddress.getText(),
-                  postalCode.getText(), phoneNumber.getText(), state.getValue().toString(), country.getValue().toString());
+        if (ReferencedMethods.getFormState().equals("modify")) {
+            if ((!state.getSelectionModel().isEmpty() || !country.getSelectionModel().isEmpty())
+                    && (!customerName.getText().isEmpty()) && !customerAddress.getText().isEmpty() && !phoneNumber.getText().isEmpty()
+                    && !postalCode.getText().isEmpty()) {
 
-          if (update > 0) {
+                int update = sqlCommands.updateCustomer(Integer.parseInt(customerID.getText()), customerName.getText(), customerAddress.getText(),
+                        postalCode.getText(), phoneNumber.getText(), state.getValue().toString(), country.getValue().toString());
 
-              ListModifications.clearCustomers();
-              sqlCommands.populateCustomers();
+                if (update > 0) {
 
-              new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
-          } else {
-              Alert alert = new Alert(Alert.AlertType.ERROR);
-              alert.setContentText("The customer did not update properly. Please validate all the fields have been populated correctly.");
-              alert.showAndWait();
-          }
-      }
+                    ListModifications.clearCustomers();
+                    sqlCommands.populateCustomers();
+
+                    new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("The customer did not update properly. Please validate all the fields have been populated correctly.");
+                alert.showAndWait();
+            }
+        }
 
     }
 

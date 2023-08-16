@@ -20,7 +20,7 @@ public abstract class JavaDBC {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-            System.out.println("Connection successful!");
+            //System.out.println("Connection successful!");
         }
         catch (Exception e){
             System.out.println("Error:" + e.getMessage());
@@ -30,7 +30,7 @@ public abstract class JavaDBC {
     public static void closeConnection(){
         try {
             connection.close();
-            System.out.println("Connection closed!");
+            //System.out.println("Connection closed!");
         }
         catch (Exception e){
             System.out.println("Error:" + e.getMessage());

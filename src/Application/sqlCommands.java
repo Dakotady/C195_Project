@@ -90,15 +90,20 @@ public abstract class sqlCommands {
                 String description = rs.getString("Description");
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
-                Timestamp start = rs.getTimestamp("Start");
-                Timestamp end = rs.getTimestamp("End");
-                Timestamp create = rs.getTimestamp("Create_Date");
+                Timestamp startTemp = rs.getTimestamp("Start");
+                Timestamp endTemp = rs.getTimestamp("End");
+                Timestamp createTemp = rs.getTimestamp("Create_Date");
                 String createdBy = rs.getString("Created_By");
-                Timestamp lastUpdated = rs.getTimestamp("Last_Update");
+                Timestamp lastUpdatedTemp = rs.getTimestamp("Last_Update");
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerID = rs.getInt("Customer_ID");
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
+
+                Timestamp start = Timestamp.valueOf(ReferencedMethods.localTimeConversion(startTemp, ZoneId.of("UTC")));
+                Timestamp end = Timestamp.valueOf(ReferencedMethods.localTimeConversion(endTemp, ZoneId.of("UTC")));
+                Timestamp create = Timestamp.valueOf(ReferencedMethods.localTimeConversion(createTemp, ZoneId.of("UTC")));
+                Timestamp lastUpdated = Timestamp.valueOf(ReferencedMethods.localTimeConversion(lastUpdatedTemp, ZoneId.of("UTC")));
 
 
                Appointments appointment = new Appointments(appointmentID, title, description, location, type, start, end, create, createdBy, lastUpdated, lastUpdatedBy, customerID, userID, contactID);
@@ -126,13 +131,17 @@ public abstract class sqlCommands {
             String address = rs.getString("Address");
             String postalCode = rs.getString("Postal_Code");
             String phoneNum = rs.getString("Phone");
-            Timestamp create = rs.getTimestamp("Create_Date");
+            Timestamp createTemp = rs.getTimestamp("Create_Date");
             String createdBy = rs.getString("Created_By");
-            Timestamp lastUpdated = rs.getTimestamp("Last_Update");
+            Timestamp lastUpdatedTemp = rs.getTimestamp("Last_Update");
             String lastUpdatedBy = rs.getString("Last_Updated_By");
             int divisionID = rs.getInt("Division_ID");
 
-            Customers customer = new Customers(customerID, customerName, address, postalCode, phoneNum, create, createdBy, lastUpdated, lastUpdatedBy, divisionID);
+            Timestamp create = Timestamp.valueOf(ReferencedMethods.localTimeConversion(createTemp, ZoneId.of("UTC")));
+            Timestamp lastUpdated = Timestamp.valueOf(ReferencedMethods.localTimeConversion(lastUpdatedTemp, ZoneId.of("UTC")));
+
+            Customers customer = new Customers(customerID, customerName, address, postalCode, phoneNum, create, createdBy, lastUpdated,
+                    lastUpdatedBy, divisionID);
 
             ListModifications.addCustomer(customer);
         }
@@ -249,11 +258,136 @@ public abstract class sqlCommands {
         return divisionID;
     }
 
+    public static void populateContacts() throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Select * From contacts";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            String contactName = rs.getString("Contact_Name");
+
+            ListModifications.addContacts(contactName);
+        }
+
+        JavaDBC.closeConnection();
+
+    }
+
+    public static String convertContactID(int ID) throws SQLException {
+
+        JavaDBC.openConnection();
+        String contactName = null;
+
+        String sql = "Select * From contacts where Contact_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, ID);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            contactName = rs.getString("Contact_Name");
+
+        }
+
+        JavaDBC.closeConnection();
+
+        return contactName;
+    }
+
+    public static int getContactID(String contactName) throws SQLException {
+
+        JavaDBC.openConnection();
+        int contactID = 0;
+
+        String sql = "Select * From contacts where Contact_Name = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, contactName);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            contactID = rs.getInt("Contact_ID");
+
+        }
+
+        JavaDBC.closeConnection();
+
+        return contactID;
+    }
+
+    public static void populateUsers() throws SQLException {
+
+        JavaDBC.openConnection();
+
+        String sql = "Select * From users";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            String userName = rs.getString("User_Name");
+
+            ListModifications.addUsers(userName);
+        }
+
+        JavaDBC.closeConnection();
+
+    }
+
+    public static String convertUserID(int ID) throws SQLException {
+
+        JavaDBC.openConnection();
+        String userName = null;
+
+        String sql = "Select * From users where User_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, ID);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            userName = rs.getString("User_Name");
+
+        }
+
+        JavaDBC.closeConnection();
+
+        return userName;
+    }
+
+    public static int getUserID(String userName) throws SQLException {
+
+        JavaDBC.openConnection();
+        int userID = 0;
+
+        String sql = "Select * From users where User_Name = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, userName);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+
+            userID = rs.getInt("Contact_ID");
+
+        }
+
+        JavaDBC.closeConnection();
+
+        return userID;
+    }
+
+
+
+
     public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phoneNum, String state,
                                       String country) throws SQLException {
 
         int divisionID = getDivisionID(state, country);
-        Timestamp time = ReferencedMethods.getCurrentLocalTime();
+        Timestamp time = ReferencedMethods.ConvertToUTC(ReferencedMethods.getCurrentLocalTime().toLocalDateTime(),ReferencedMethods.getLocalTimeZone());
         String user = ReferencedMethods.getUserName();
 
         JavaDBC.openConnection();
@@ -281,7 +415,7 @@ public abstract class sqlCommands {
                                   String country) throws SQLException{
 
         int divisionID = getDivisionID(state, country);
-        Timestamp time = ReferencedMethods.getCurrentLocalTime();
+        Timestamp time = ReferencedMethods.ConvertToUTC(ReferencedMethods.getCurrentLocalTime().toLocalDateTime(),ReferencedMethods.getLocalTimeZone());
         String user = ReferencedMethods.getUserName();
 
         JavaDBC.openConnection();

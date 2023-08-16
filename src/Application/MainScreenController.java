@@ -52,7 +52,7 @@ public class MainScreenController implements Initializable {
 
     public void modifyAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
-
+        ReferencedMethods.setFormState("modify");
         Appointments selected = (Appointments) appointmentTable.getSelectionModel().getSelectedItem();
         ReferencedMethods.setSelectedAppointment(selected);
 
@@ -63,7 +63,7 @@ public class MainScreenController implements Initializable {
             alert.showAndWait();
         } else {
 
-            ReferencedMethods.setFormState("modified");
+            ReferencedMethods.setFormState("modify");
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
         }
 
@@ -89,8 +89,10 @@ public class MainScreenController implements Initializable {
         Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
 
         FilteredList<Appointments> filteredAppointments = new FilteredList<>(ListModifications.getAllAppointments(),
-                i-> i.start.toLocalDateTime().getDayOfYear() >=  currentTime.toLocalDateTime().getDayOfYear() && i.start.toLocalDateTime().getDayOfYear()
-                        <= currentTime.toLocalDateTime().getDayOfYear() + 7 && i.start.toLocalDateTime().getYear() == currentTime.toLocalDateTime().getYear());
+                i-> i.start.toLocalDateTime().getDayOfYear() >=  currentTime.toLocalDateTime().getDayOfYear() -
+                        ReferencedMethods.minDayOfWeek(currentTime.toLocalDateTime().toLocalDate()) && i.start.toLocalDateTime().getDayOfYear() <=
+                        currentTime.toLocalDateTime().getDayOfYear() + ReferencedMethods.maxDayOfWeek(currentTime.toLocalDateTime().toLocalDate())
+                        && i.start.toLocalDateTime().getYear() == currentTime.toLocalDateTime().getYear());
 
         appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
         title_Col.setCellValueFactory(new PropertyValueFactory<Appointments, String>("title"));
