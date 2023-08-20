@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppointmentInfoController implements Initializable {
@@ -16,13 +18,14 @@ public class AppointmentInfoController implements Initializable {
     public TextField description;
     public ComboBox contact;
     public DatePicker appointmentDate;
-    public ComboBox customerID;
+    public ComboBox customerName;
     public Button cancel;
     public ComboBox startTime;
     public ComboBox endTime;
     public Button confirm;
-    public TextField locationText;
-    public ComboBox userID;
+    public TextField location;
+    public ComboBox userName;
+    public TextField type;
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
         ListModifications.clearAppointments();
@@ -44,17 +47,51 @@ public class AppointmentInfoController implements Initializable {
 
     }
 
-    public void confirmOnClicked(ActionEvent actionEvent) throws IOException {
-        ListModifications.clearAppointments();
+    public void confirmOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
         if (ReferencedMethods.getFormState().equals("add")) {
-            if (!title.getText().isEmpty() && !description.getText().isEmpty() && !locationText.getText().isEmpty() &&
+            if (!title.getText().isEmpty() && !description.getText().isEmpty() && !location.getText().isEmpty() && !type.getText().isEmpty() &&
                     !contact.getSelectionModel().isEmpty() && appointmentDate.getValue() != null && !startTime.getSelectionModel().isEmpty() &&
-                    !endTime.getSelectionModel().isEmpty() && !customerID.getSelectionModel().isEmpty() && !userID.getSelectionModel().isEmpty()) {
+                    !endTime.getSelectionModel().isEmpty() && !customerName.getSelectionModel().isEmpty() && !userName.getSelectionModel().isEmpty()) {
 
-                new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+                LocalDateTime startCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(startTime.getValue().toString()));
+                LocalDateTime endCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(endTime.getValue().toString()));
+                int customerID = ListModifications.convertCustomerName(customerName.getValue().toString());
 
-                ListModifications.clearCustomerNames();
+                if (ReferencedMethods.checkForEstOutOfBussiness(startCheck)) {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The start time needs to be between 08:00 and 22:00.");
+                    alert.showAndWait();
+                } else if (ReferencedMethods.checkForEstOutOfBussiness(endCheck)) {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The end time needs to be between 08:00 and 22:00.");
+                    alert.showAndWait();
+                } else if (ReferencedMethods.checkForCustomerOverlaps(startCheck, endCheck, customerID)) {
+
+                    // Validate this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The current customer has an overlapping appointment.");
+                    alert.showAndWait();
+                } else {
+
+                    int rowsAffected = sqlCommands.addAppointment(title.getText().toString(),
+                            description.getText().toString(), location.getText().toString(), type.getText().toString(),
+                            contact.getValue().toString(), startCheck, endCheck, customerName.getValue().toString(), userName.getValue().toString());
+
+                    if (rowsAffected > 0) {
+
+                        ListModifications.clearAppointments();
+                        ListModifications.clearCustomerNames();
+                        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+                    } else {
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("The Appointment did not add properly. Please validate all the fields have been populated correctly.");
+                        alert.showAndWait();
+                    }
+                }
             } else {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -65,13 +102,50 @@ public class AppointmentInfoController implements Initializable {
 
 
         if (ReferencedMethods.getFormState().equals("modify")) {
-            if (!title.getText().isEmpty() && !description.getText().isEmpty() && !locationText.getText().isEmpty() &&
+            if (!title.getText().isEmpty() && !description.getText().isEmpty() && !location.getText().isEmpty() && !type.getText().isEmpty() &&
                     !contact.getSelectionModel().isEmpty() && appointmentDate.getValue() != null && !startTime.getSelectionModel().isEmpty() &&
-                    !endTime.getSelectionModel().isEmpty() && !customerID.getSelectionModel().isEmpty() && !userID.getSelectionModel().isEmpty()) {
+                    !endTime.getSelectionModel().isEmpty() && !customerName.getSelectionModel().isEmpty() && !userName.getSelectionModel().isEmpty()) {
 
-                new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+                LocalDateTime startCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(startTime.getValue().toString()));
+                LocalDateTime endCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(endTime.getValue().toString()));
+                int customerID = ListModifications.convertCustomerName(customerName.getValue().toString());
 
-                ListModifications.clearCustomerNames();
+                if (ReferencedMethods.checkForEstOutOfBussiness(startCheck)) {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The start time needs to be between 08:00 and 22:00.");
+                    alert.showAndWait();
+                } else if (ReferencedMethods.checkForEstOutOfBussiness(endCheck)) {
+
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The end time needs to be between 08:00 and 22:00.");
+                    alert.showAndWait();
+                } else if (ReferencedMethods.checkForCustomerOverlaps(startCheck, endCheck, customerID)) {
+
+                    // Validate this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The current customer has an overlapping appointment.");
+                    alert.showAndWait();
+                } else {
+
+                    Appointments appointment = ReferencedMethods.getSelectedAppointment();
+
+                    int rowsAffected = sqlCommands.updateAppointment(appointment.appointmentID, title.getText().toString(),
+                            description.getText().toString(), location.getText().toString(), type.getText().toString(),
+                            contact.getValue().toString(), startCheck, endCheck, customerName.getValue().toString(), userName.getValue().toString());
+
+                    if (rowsAffected > 0) {
+
+                        ListModifications.clearCustomerNames();
+                        ListModifications.clearAppointments();
+                        new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
+                    }else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("The Appointment did not update properly. Please validate all the fields have been populated correctly.");
+                        alert.showAndWait();
+
+                    }
+                }
             } else {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -98,9 +172,12 @@ public class AppointmentInfoController implements Initializable {
         ListModifications.populateCustomerNames();
 
         contact.setItems(ListModifications.getAllContacts());
-        customerID.setItems(ListModifications.getAllCustomerNames());
+        customerName.setItems(ListModifications.getAllCustomerNames());
 
-        userID.setItems(ListModifications.getAllUsers());
+        userName.setItems(ListModifications.getAllUsers());
+
+        startTime.setItems(ListModifications.getAllTimes());
+        endTime.setItems(ListModifications.getAllTimes());
 
         if (ReferencedMethods.getFormState().equals("modify")){
             Appointments appointment = ReferencedMethods.getSelectedAppointment();
@@ -108,10 +185,11 @@ public class AppointmentInfoController implements Initializable {
             appointmentIDText.setText(String.valueOf(appointment.appointmentID));
             title.setText(appointment.title);
             description.setText(appointment.description);
-            locationText.setText(appointment.location);
+            location.setText(appointment.location);
+            type.setText((appointment.type));
             try {
                 contact.setValue(sqlCommands.convertContactID(appointment.contactID));
-                userID.setValue(sqlCommands.convertUserID(appointment.userID));
+                userName.setValue(sqlCommands.convertUserID(appointment.userID));
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -119,7 +197,7 @@ public class AppointmentInfoController implements Initializable {
             startTime.setValue(appointment.start.toLocalDateTime().toLocalTime());
             endTime.setValue(appointment.end.toLocalDateTime().toLocalTime());
 
-            customerID.setValue(ListModifications.convertCustomerID(appointment.customerID));
+            customerName.setValue(ListModifications.convertCustomerID(appointment.customerID));
 
 
 

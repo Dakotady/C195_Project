@@ -1,19 +1,10 @@
 package Application;
 
 import Connections.JavaDBC;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 public abstract class sqlCommands {
 
@@ -371,7 +362,7 @@ public abstract class sqlCommands {
 
         while (rs.next()){
 
-            userID = rs.getInt("Contact_ID");
+            userID = rs.getInt("User_ID");
 
         }
 
@@ -380,8 +371,44 @@ public abstract class sqlCommands {
         return userID;
     }
 
+    public static int updateAppointment(int appointmentID, String title, String description, String location, String type, String contactName,
+                                        LocalDateTime appointmentStart, LocalDateTime appointmentEnd, String customerName, String userName)
+                                        throws SQLException {
 
+        int contactID = getContactID(contactName);
+        int customerID = ListModifications.convertCustomerName(customerName);
+        int userID = getUserID(userName);
 
+        Timestamp startAsUTC = ReferencedMethods.ConvertToUTC(appointmentStart, ReferencedMethods.getLocalTimeZone());
+        Timestamp endAsUTC = ReferencedMethods.ConvertToUTC(appointmentEnd, ReferencedMethods.getLocalTimeZone());
+        Timestamp lastUpdateTime = ReferencedMethods.ConvertToUTC(LocalDateTime.now(), ReferencedMethods.getLocalTimeZone());
+
+        String lastUpdatedBy = ReferencedMethods.getUserName();
+
+        JavaDBC.openConnection();
+
+        String sql = "Update appointments Set Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?," +
+                " Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? Where Appointment_ID = ?";
+
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, startAsUTC);
+        ps.setTimestamp(6, endAsUTC);
+        ps.setTimestamp(7, lastUpdateTime);
+        ps.setString(8, lastUpdatedBy);
+        ps.setInt(9, customerID);
+        ps.setInt(10, userID);
+        ps.setInt(11, contactID);
+        ps.setInt(12, appointmentID);
+
+        int affectedRows = ps.executeUpdate();
+        JavaDBC.closeConnection();
+
+        return affectedRows;
+    }
 
     public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phoneNum, String state,
                                       String country) throws SQLException {
@@ -410,6 +437,45 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
+    public static int addAppointment(String title, String description, String location, String type, String contactName,
+                                     LocalDateTime appointmentStart, LocalDateTime appointmentEnd, String customerName, String userName)
+                                     throws SQLException {
+
+        int contactID = getContactID(contactName);
+        int customerID = ListModifications.convertCustomerName(customerName);
+        int userID = getUserID(userName);
+
+        Timestamp startAsUTC = ReferencedMethods.ConvertToUTC(appointmentStart, ReferencedMethods.getLocalTimeZone());
+        Timestamp endAsUTC = ReferencedMethods.ConvertToUTC(appointmentEnd, ReferencedMethods.getLocalTimeZone());
+        Timestamp lastUpdateTime = ReferencedMethods.ConvertToUTC(LocalDateTime.now(), ReferencedMethods.getLocalTimeZone());
+
+        String lastUpdatedBy = ReferencedMethods.getUserName();
+
+        JavaDBC.openConnection();
+
+        String sql = "Insert into appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, " +
+                "Customer_ID, User_ID, Contact_ID) Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, startAsUTC);
+        ps.setTimestamp(6, endAsUTC);
+        ps.setTimestamp(7, lastUpdateTime);
+        ps.setString(8, lastUpdatedBy);
+        ps.setTimestamp(9, lastUpdateTime);
+        ps.setString(10, lastUpdatedBy);
+        ps.setInt(11, customerID);
+        ps.setInt(12, userID);
+        ps.setInt(13, contactID);
+
+        int affectedRows = ps.executeUpdate();
+
+        JavaDBC.closeConnection();
+
+        return affectedRows;
+    }
 
     public static int addCustomer(String customerName, String address, String postalCode, String phoneNum, String state,
                                   String country) throws SQLException{
@@ -440,7 +506,20 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
-    public static int deleteCustomer(int customerID) throws SQLException {
+    public static void deleteAppointment(int appointmentID) throws SQLException{
+
+        JavaDBC.openConnection();
+
+        String sql = "Delete From appointments Where Appointment_ID = ?";
+        PreparedStatement ps = JavaDBC.connection.prepareStatement(sql);
+        ps.setInt(1, appointmentID);
+        int affectedRows = ps.executeUpdate();
+
+        JavaDBC.closeConnection();
+
+    }
+
+    public static void deleteCustomer(int customerID) throws SQLException {
 
         JavaDBC.openConnection();
 
@@ -451,6 +530,5 @@ public abstract class sqlCommands {
 
         JavaDBC.closeConnection();
 
-        return affectedRows;
     }
 }

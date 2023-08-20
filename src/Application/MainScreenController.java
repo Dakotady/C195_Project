@@ -70,7 +70,23 @@ public class MainScreenController implements Initializable {
 
     }
 
-    public void deleteAppointmentOnClicked(ActionEvent actionEvent) {
+    public void deleteAppointmentOnClicked(ActionEvent actionEvent) throws SQLException {
+
+        Boolean response;
+
+        Appointments selected = (Appointments) appointmentTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Are you sure you want to delete AppointmentID = " + selected.appointmentID + ", Appointment Type = " + selected.type + " ?");
+        alert.setContentText("Choose Ok to continue or Cancel to continue.");
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        response = result == ButtonType.OK;
+
+        if (response) {
+
+            sqlCommands.deleteAppointment(selected.appointmentID);
+            ListModifications.getAllAppointments().remove(selected);
+        }
     }
 
     public void customerListOnClicked(ActionEvent actionEvent) throws IOException {

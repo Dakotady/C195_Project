@@ -3,6 +3,9 @@ package Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class ListModifications {
 
     private static final ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
@@ -19,6 +22,17 @@ public class ListModifications {
 
     private static final ObservableList<String> allUsers = FXCollections.observableArrayList();
 
+    private static final ObservableList<LocalTime> allTimes = FXCollections.observableArrayList(LocalTime.parse("00:00"), LocalTime.parse("00:30"),
+    LocalTime.parse("01:00"), LocalTime.parse("01:30"), LocalTime.parse("02:00"), LocalTime.parse("02:30"), LocalTime.parse("03:00"),
+            LocalTime.parse("03:30"), LocalTime.parse("04:00"), LocalTime.parse("04:30"), LocalTime.parse("05:00"), LocalTime.parse("05:30"),
+            LocalTime.parse("06:00"), LocalTime.parse("06:30"), LocalTime.parse("07:00"), LocalTime.parse("07:30"), LocalTime.parse("08:00"),
+            LocalTime.parse("08:30"), LocalTime.parse("09:00"), LocalTime.parse("09:30"), LocalTime.parse("10:00"), LocalTime.parse("10:30"),
+            LocalTime.parse("11:00"), LocalTime.parse("11:30"), LocalTime.parse("12:00"), LocalTime.parse("12:30"), LocalTime.parse("13:00"),
+            LocalTime.parse("13:30"), LocalTime.parse("14:00"), LocalTime.parse("14:30"), LocalTime.parse("15:00"), LocalTime.parse("15:30"),
+            LocalTime.parse("16:00"), LocalTime.parse("16:30"), LocalTime.parse("17:00"), LocalTime.parse("17:30"), LocalTime.parse("18:00"),
+            LocalTime.parse("18:30"), LocalTime.parse("19:00"), LocalTime.parse("19:30"), LocalTime.parse("20:00"), LocalTime.parse("20:30"),
+            LocalTime.parse("21:00"), LocalTime.parse("21:30"), LocalTime.parse("22:00"), LocalTime.parse("22:30"), LocalTime.parse("23:00"),
+            LocalTime.parse("23:30"));
 
 
     public static void clearAppointments(){
@@ -80,6 +94,8 @@ public class ListModifications {
     public static ObservableList<String> getAllCustomerNames() { return allCustomerNames; }
 
     public static ObservableList<String> getAllUsers() { return  allUsers; }
+
+    public static ObservableList<LocalTime> getAllTimes() { return allTimes; }
 
     public static void populateCustomerNames(){
 

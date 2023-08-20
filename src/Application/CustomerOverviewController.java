@@ -72,7 +72,6 @@ public class CustomerOverviewController implements Initializable {
 
             Boolean response;
 
-            sqlCommands.deleteCustomer(selected.customerID);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("are you sure you want to delete the customer " + selected.customerName);
@@ -80,6 +79,7 @@ public class CustomerOverviewController implements Initializable {
             response = result == ButtonType.OK;
 
             if (response) {
+                sqlCommands.deleteCustomer(selected.customerID);
                 ListModifications.getAllCustomers().remove(selected);
             }
         }

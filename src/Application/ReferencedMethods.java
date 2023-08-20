@@ -218,7 +218,75 @@ public class ReferencedMethods {
         return value;
     }
 
+    public static Boolean checkForEstOutOfBussiness(LocalDateTime localDateTime){
+        Boolean test = false;
+
+        ZonedDateTime currentLocalTime = localDateTime.atZone(getLocalTimeZone());
+
+        ZonedDateTime whenConvertToEst = currentLocalTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+        LocalDateTime value = whenConvertToEst.toLocalDateTime();
+
+        if (value.toLocalTime().isBefore(LocalTime.parse("08:00")) || value.toLocalTime().isAfter(LocalTime.parse("22:00"))){
+
+            test = true;
+        }
+
+        return test;
+    }
+
+    public static Boolean checkForCustomerOverlaps(LocalDateTime start, LocalDateTime end, int customerID){
+        Boolean test = false;
+        int testAppointmentID = -1;
 
 
+        ZonedDateTime startZone = start.atZone(getLocalTimeZone());
+        ZonedDateTime endZone = end.atZone(getLocalTimeZone());
+
+        for (Appointments appointment : ListModifications.getAllAppointments()) {
+
+            if (formState.equals("modify")) {
+                Appointments currentAppointment = getSelectedAppointment();
+                testAppointmentID = currentAppointment.appointmentID;
+            }
+
+            if (testAppointmentID > -1) {
+
+                if (appointment.appointmentID != testAppointmentID) {
+                    if (customerID == appointment.customerID) {
+
+                        ZonedDateTime appointmentStartZone = appointment.start.toLocalDateTime().atZone(getLocalTimeZone());
+                        ZonedDateTime appointmentEndZone = appointment.end.toLocalDateTime().atZone(getLocalTimeZone());
+
+                        if ((appointmentStartZone.isBefore(startZone) && appointmentEndZone.isAfter(startZone)) || (
+                                appointmentStartZone.isBefore(endZone) && appointmentEndZone.isAfter(endZone)) || (appointmentStartZone.isBefore(startZone) &&
+                                appointmentEndZone.isAfter(endZone)) || (appointmentStartZone.isAfter(startZone) && appointmentEndZone.isBefore(endZone))
+                                || appointmentStartZone.equals(startZone) || appointmentEndZone.equals(endZone)) {
+
+                            test = true;
+                        }
+                    }
+                }
+            }else {
+
+                if (customerID == appointment.customerID) {
+
+                    ZonedDateTime appointmentStartZone = appointment.start.toLocalDateTime().atZone(getLocalTimeZone());
+                    ZonedDateTime appointmentEndZone = appointment.end.toLocalDateTime().atZone(getLocalTimeZone());
+
+                    if ((appointmentStartZone.isBefore(startZone) && appointmentEndZone.isAfter(startZone)) || (
+                            appointmentStartZone.isBefore(endZone) && appointmentEndZone.isAfter(endZone)) || (appointmentStartZone.isBefore(startZone) &&
+                            appointmentEndZone.isAfter(endZone)) || (appointmentStartZone.isAfter(startZone) && appointmentEndZone.isBefore(endZone))
+                            || appointmentStartZone.equals(startZone) || appointmentEndZone.equals(endZone)) {
+
+                        test = true;
+                    }
+                }
+
+            }
+        }
+
+        return test;
+    }
 
 }
