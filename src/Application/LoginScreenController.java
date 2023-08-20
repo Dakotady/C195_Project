@@ -128,6 +128,7 @@ public class LoginScreenController implements Initializable {
 
             //sets users information
             ReferencedMethods.setUserInfo(username, userID);
+            ReferencedMethods.setHasInitialized(false);
 
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 

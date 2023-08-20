@@ -77,7 +77,8 @@ public class MainScreenController implements Initializable {
         Appointments selected = (Appointments) appointmentTable.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Are you sure you want to delete AppointmentID = " + selected.appointmentID + ", Appointment Type = " + selected.type + " ?");
+        alert.setHeaderText("Are you sure you want to delete AppointmentID = " + selected.appointmentID +
+                ", Appointment Type = " + selected.type + " ?");
         alert.setContentText("Choose Ok to continue or Cancel to continue.");
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
         response = result == ButtonType.OK;
@@ -190,6 +191,23 @@ public class MainScreenController implements Initializable {
         customer_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("customerID"));
         user_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("userID"));
         appointmentTable.setItems(ListModifications.getAllAppointments());
+
+        if (!ReferencedMethods.getHasInitialized()){
+
+            if(ListModifications.CheckAppointmentIsNear(ReferencedMethods.getUserID(), LocalDateTime.now())){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("You have an appointment within 15 minutes: AppointmentID " + ReferencedMethods.getNearAppointmentID() +
+                        ", Start date and time " + ReferencedMethods.getNearAppointmentStartTime().toLocalDate() + " " +
+                        ReferencedMethods.getNearAppointmentStartTime().toLocalTime());
+                alert.showAndWait();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("You do not have any upcoming appointments");
+                alert.showAndWait();
+            }
+
+            ReferencedMethods.setHasInitialized(true);
+        }
     }
 
 }

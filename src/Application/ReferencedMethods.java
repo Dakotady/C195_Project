@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.Objects;
@@ -26,6 +25,33 @@ public class ReferencedMethods {
     private static int countryID;
     private static String username;
     private static int userID;
+    private static Boolean hasInitialized;
+    private static int nearAppointmentID;
+    private static LocalDateTime nearAppointmentStartTime;
+
+    public static void setNearAppointmentID(int appointmentID){
+        nearAppointmentID = appointmentID;
+    }
+
+    public static int getNearAppointmentID(){
+        return nearAppointmentID;
+    }
+
+    public static void setNearAppointmentStartTime(LocalDateTime startTime){
+        nearAppointmentStartTime = startTime;
+    }
+
+    public static LocalDateTime getNearAppointmentStartTime(){
+        return nearAppointmentStartTime;
+    }
+
+    public static void setHasInitialized(Boolean mode){
+        hasInitialized = mode;
+    }
+
+    public static Boolean getHasInitialized(){
+        return hasInitialized;
+    }
 
     public static void setUserInfo(String Username, int UserID){
 

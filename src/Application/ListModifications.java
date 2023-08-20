@@ -134,4 +134,30 @@ public class ListModifications {
 
         return value;
     }
+
+    public static boolean CheckAppointmentIsNear(int userID, LocalDateTime localDateTime){
+
+        Boolean value = false;
+
+        for (Appointments appointment : allAppointments) {
+
+            LocalTime appointmentLocalTime = appointment.start.toLocalDateTime().toLocalTime();
+
+            if (appointment.userID == userID && localDateTime.toLocalDate().isEqual(appointment.start.toLocalDateTime().toLocalDate())){
+
+                if (appointmentLocalTime.equals(localDateTime.toLocalTime()) || (appointmentLocalTime.isAfter(localDateTime.toLocalTime()) &&
+                        appointmentLocalTime.isBefore(localDateTime.toLocalTime().plusMinutes(15))) ||
+                        appointmentLocalTime.equals(localDateTime.toLocalTime().plusMinutes(15))){
+
+                    ReferencedMethods.setNearAppointmentID(appointment.appointmentID);
+                    ReferencedMethods.setNearAppointmentStartTime(appointment.start.toLocalDateTime());
+                    value = true;
+                }
+
+
+            }
+        }
+
+        return value;
+    }
 }
