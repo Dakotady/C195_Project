@@ -244,7 +244,7 @@ public class ReferencedMethods {
         return value;
     }
 
-    public static Boolean checkForEstOutOfBussiness(LocalDateTime localDateTime){
+    public static Boolean checkForEstOutOfBusiness(LocalDateTime localDateTime){
         Boolean test = false;
 
         ZonedDateTime currentLocalTime = localDateTime.atZone(getLocalTimeZone());

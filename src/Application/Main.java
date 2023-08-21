@@ -1,5 +1,6 @@
 package Application;
 
+import Connections.FileIO;
 import Connections.JavaDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -20,6 +23,12 @@ import java.util.TimeZone;
 
 public class Main extends Application implements Initializable {
 
+    //Lambda
+    public interface mainInterface {
+
+        LocalDateTime passLocalDateTimeNow();
+
+    }
 
 
     @Override

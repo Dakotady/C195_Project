@@ -58,12 +58,12 @@ public class AppointmentInfoController implements Initializable {
                 LocalDateTime endCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(endTime.getValue().toString()));
                 int customerID = ListModifications.convertCustomerName(customerName.getValue().toString());
 
-                if (ReferencedMethods.checkForEstOutOfBussiness(startCheck)) {
+                if (ReferencedMethods.checkForEstOutOfBusiness(startCheck)) {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The start time needs to be between 08:00 and 22:00.");
                     alert.showAndWait();
-                } else if (ReferencedMethods.checkForEstOutOfBussiness(endCheck)) {
+                } else if (ReferencedMethods.checkForEstOutOfBusiness(endCheck)) {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The end time needs to be between 08:00 and 22:00.");
@@ -110,19 +110,18 @@ public class AppointmentInfoController implements Initializable {
                 LocalDateTime endCheck = LocalDateTime.of(appointmentDate.getValue(), LocalTime.parse(endTime.getValue().toString()));
                 int customerID = ListModifications.convertCustomerName(customerName.getValue().toString());
 
-                if (ReferencedMethods.checkForEstOutOfBussiness(startCheck)) {
+                if (ReferencedMethods.checkForEstOutOfBusiness(startCheck)) {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The start time needs to be between 08:00 and 22:00.");
                     alert.showAndWait();
-                } else if (ReferencedMethods.checkForEstOutOfBussiness(endCheck)) {
+                } else if (ReferencedMethods.checkForEstOutOfBusiness(endCheck)) {
 
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The end time needs to be between 08:00 and 22:00.");
                     alert.showAndWait();
                 } else if (ReferencedMethods.checkForCustomerOverlaps(startCheck, endCheck, customerID)) {
 
-                    // Validate this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The current customer has an overlapping appointment.");
                     alert.showAndWait();

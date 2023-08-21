@@ -1,11 +1,13 @@
 package Application;
 
+import Connections.FileIO;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -98,9 +100,10 @@ public class MainScreenController implements Initializable {
 
     public void reportsOnClicked(ActionEvent actionEvent) throws IOException {
 
+        FileIO.readFile();
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/Reports.fxml", 1500, 500);
     }
-
+// Lambda
     public void appointmentFilterWeekOnClicked(ActionEvent actionEvent) {
 
         Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
@@ -128,6 +131,7 @@ public class MainScreenController implements Initializable {
     public void appointmentFilterMonthOnClicked(ActionEvent actionEvent) {
         Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
 
+        //Lambda
         FilteredList<Appointments> filteredAppointments = new FilteredList<>(ListModifications.getAllAppointments(),
                 i-> i.start.toLocalDateTime().getMonth() ==  currentTime.toLocalDateTime().getMonth() && i.start.toLocalDateTime().getYear()
                         == currentTime.toLocalDateTime().getYear());
@@ -194,7 +198,10 @@ public class MainScreenController implements Initializable {
 
         if (!ReferencedMethods.getHasInitialized()){
 
-            if(ListModifications.CheckAppointmentIsNear(ReferencedMethods.getUserID(), LocalDateTime.now())){
+            //Lambda
+            Main.mainInterface localTime = () -> LocalDateTime.now();
+
+            if(ListModifications.CheckAppointmentIsNear(ReferencedMethods.getUserID(), localTime.passLocalDateTimeNow())){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("You have an appointment within 15 minutes: AppointmentID " + ReferencedMethods.getNearAppointmentID() +
                         ", Start date and time " + ReferencedMethods.getNearAppointmentStartTime().toLocalDate() + " " +
@@ -207,6 +214,8 @@ public class MainScreenController implements Initializable {
             }
 
             ReferencedMethods.setHasInitialized(true);
+
+
         }
     }
 

@@ -1,5 +1,6 @@
 package Application;
 
+import Connections.FileIO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,9 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -104,6 +107,8 @@ public class LoginScreenController implements Initializable {
                 }
                 alert.showAndWait();
                 error = true;
+
+                FileIO.writeToFile(LocalDateTime.now(), 0);
             }
             else if (loginValidation == -1){
 
@@ -117,6 +122,9 @@ public class LoginScreenController implements Initializable {
                 }
                 alert.showAndWait();
                 error = true;
+
+                FileIO.writeToFile(LocalDateTime.now(), 0);
+
             }
             else{
                 userID = loginValidation;
@@ -129,6 +137,9 @@ public class LoginScreenController implements Initializable {
             //sets users information
             ReferencedMethods.setUserInfo(username, userID);
             ReferencedMethods.setHasInitialized(false);
+
+            FileIO.writeToFile(LocalDateTime.now(), 1);
+
 
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
 

@@ -12,6 +12,8 @@ public class ListModifications {
 
     private static final ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
 
+    private static final ObservableList<LoginActivity> allLoginActivity = FXCollections.observableArrayList();
+
     private static final ObservableList<String> allCountries = FXCollections.observableArrayList();
 
     private static final ObservableList<String> allDivisions = FXCollections.observableArrayList();
@@ -43,6 +45,8 @@ public class ListModifications {
         allCustomers.clear();
     }
 
+    public static void clearLoginActivity() { allLoginActivity.clear(); }
+
     public static void clearCountries(){
         allCountries.clear();
     }
@@ -61,6 +65,10 @@ public class ListModifications {
 
     public static void addCustomer(Customers newCustomer){
         allCustomers.add(newCustomer);
+    }
+
+    public static void addLoginActivity(LoginActivity newLogin){
+        allLoginActivity.add(newLogin);
     }
 
     public static void addCountry(String country){
@@ -82,6 +90,8 @@ public class ListModifications {
     public static ObservableList<Customers> getAllCustomers(){
         return allCustomers;
     }
+
+    public static ObservableList<LoginActivity> getAllLoginActivity() { return allLoginActivity; }
 
     public static ObservableList<String> getAllCountries(){
         return allCountries;
