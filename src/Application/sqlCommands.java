@@ -6,8 +6,18 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+/**
+ * This class handles all statements coming from and to the database.
+ */
 public abstract class sqlCommands {
 
+    /**
+     * This method validates if the username and password is correct. it will return a int value to determine if the user can login or if there is an issue.
+     * @param Username
+     * @param Password
+     * @return
+     * @throws SQLException
+     */
     public static int LoginValidation(String Username, String Password) throws SQLException {
 
         JavaDBC.openConnection();
@@ -66,6 +76,10 @@ public abstract class sqlCommands {
         return value;
     }
 
+    /**
+     * this populates ListModifications.allAppointments.
+     * @throws SQLException
+     */
     public static void populateAppointments() throws SQLException {
 
         JavaDBC.openConnection();
@@ -107,6 +121,10 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This populates ListModifications.allCustomers.
+     * @throws SQLException
+     */
     public static void populateCustomers() throws SQLException{
 
         JavaDBC.openConnection();
@@ -141,6 +159,10 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This populates ListModifications.allCountries.
+     * @throws SQLException
+     */
     public static void populateCountries() throws SQLException {
 
         JavaDBC.openConnection();
@@ -160,6 +182,12 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This returns the int value of Country_ID by using sending the Country name.
+     * @param country
+     * @return
+     * @throws SQLException
+     */
     public static int getCountryCode(String country) throws SQLException {
         int value = 0;
 
@@ -179,6 +207,11 @@ public abstract class sqlCommands {
         return value;
     }
 
+    /**
+     * This populates the ListModifications.allDivisions.
+     * @param countryID
+     * @throws SQLException
+     */
     public static void populateDivisions(int countryID) throws SQLException {
 
         JavaDBC.openConnection();
@@ -198,6 +231,11 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This converts the DivisionID and splits it into the DivisionName and CountryName.
+     * @param divisionID
+     * @throws SQLException
+     */
     public static void convertDivisionID(int divisionID) throws SQLException {
 
         JavaDBC.openConnection();
@@ -226,6 +264,13 @@ public abstract class sqlCommands {
         JavaDBC.closeConnection();
     }
 
+    /**
+     * This returns the DivisionID by using the DivisionName and CountryName.
+     * @param state
+     * @param country
+     * @return
+     * @throws SQLException
+     */
     public static int getDivisionID(String state, String country) throws SQLException {
 
         int countryID = getCountryCode(country);
@@ -249,6 +294,10 @@ public abstract class sqlCommands {
         return divisionID;
     }
 
+    /**
+     * This populates ListModifications.allContacts.
+     * @throws SQLException
+     */
     public static void populateContacts() throws SQLException {
 
         JavaDBC.openConnection();
@@ -268,6 +317,12 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This converts the ContactID to the ContactName.
+     * @param ID
+     * @return
+     * @throws SQLException
+     */
     public static String convertContactID(int ID) throws SQLException {
 
         JavaDBC.openConnection();
@@ -289,6 +344,12 @@ public abstract class sqlCommands {
         return contactName;
     }
 
+    /**
+     * This converts the ContactName to ContactID.
+     * @param contactName
+     * @return
+     * @throws SQLException
+     */
     public static int getContactID(String contactName) throws SQLException {
 
         JavaDBC.openConnection();
@@ -310,6 +371,10 @@ public abstract class sqlCommands {
         return contactID;
     }
 
+    /**
+     * This populates ListModifications.allUsers.
+     * @throws SQLException
+     */
     public static void populateUsers() throws SQLException {
 
         JavaDBC.openConnection();
@@ -329,6 +394,12 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This converts the UserID to UserName.
+     * @param ID
+     * @return
+     * @throws SQLException
+     */
     public static String convertUserID(int ID) throws SQLException {
 
         JavaDBC.openConnection();
@@ -350,6 +421,12 @@ public abstract class sqlCommands {
         return userName;
     }
 
+    /**
+     * This converts the UserName to UserID.
+     * @param userName
+     * @return
+     * @throws SQLException
+     */
     public static int getUserID(String userName) throws SQLException {
 
         JavaDBC.openConnection();
@@ -371,6 +448,21 @@ public abstract class sqlCommands {
         return userID;
     }
 
+    /**
+     * This updates the the selected appointment.
+     * @param appointmentID
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param contactName
+     * @param appointmentStart
+     * @param appointmentEnd
+     * @param customerName
+     * @param userName
+     * @return
+     * @throws SQLException
+     */
     public static int updateAppointment(int appointmentID, String title, String description, String location, String type, String contactName,
                                         LocalDateTime appointmentStart, LocalDateTime appointmentEnd, String customerName, String userName)
                                         throws SQLException {
@@ -410,6 +502,18 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
+    /**
+     * This updates the selected customer.
+     * @param customerID
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phoneNum
+     * @param state
+     * @param country
+     * @return
+     * @throws SQLException
+     */
     public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phoneNum, String state,
                                       String country) throws SQLException {
 
@@ -437,6 +541,20 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
+    /**
+     * This adds a new appointment.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param contactName
+     * @param appointmentStart
+     * @param appointmentEnd
+     * @param customerName
+     * @param userName
+     * @return
+     * @throws SQLException
+     */
     public static int addAppointment(String title, String description, String location, String type, String contactName,
                                      LocalDateTime appointmentStart, LocalDateTime appointmentEnd, String customerName, String userName)
                                      throws SQLException {
@@ -477,6 +595,17 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
+    /**
+     * This adds a new customer.
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phoneNum
+     * @param state
+     * @param country
+     * @return
+     * @throws SQLException
+     */
     public static int addCustomer(String customerName, String address, String postalCode, String phoneNum, String state,
                                   String country) throws SQLException{
 
@@ -506,6 +635,11 @@ public abstract class sqlCommands {
         return affectedRows;
     }
 
+    /**
+     * This deletes the selected appointment.
+     * @param appointmentID
+     * @throws SQLException
+     */
     public static void deleteAppointment(int appointmentID) throws SQLException{
 
         JavaDBC.openConnection();
@@ -519,6 +653,11 @@ public abstract class sqlCommands {
 
     }
 
+    /**
+     * This deletes the selected customer.
+     * @param customerID
+     * @throws SQLException
+     */
     public static void deleteCustomer(int customerID) throws SQLException {
 
         JavaDBC.openConnection();

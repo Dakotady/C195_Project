@@ -3,6 +3,9 @@ package Connections;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * This class creates a connection to the MySql database.
+ */
 public abstract class JavaDBC {
 
     private static final String protocol = "jdbc";
@@ -15,6 +18,9 @@ public abstract class JavaDBC {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection; // Connection Interface
 
+    /**
+     * this creates the connection.
+     */
     public static void openConnection(){
 
         try {
@@ -27,6 +33,9 @@ public abstract class JavaDBC {
         }
     }
 
+    /**
+     * This closes the connection.
+     */
     public static void closeConnection(){
         try {
             connection.close();

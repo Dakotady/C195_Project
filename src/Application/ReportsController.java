@@ -20,6 +20,9 @@ import java.time.Month;
 import java.time.Year;
 import java.util.ResourceBundle;
 
+/**
+ * This controls the Reports.FXML file.
+ */
 public class ReportsController implements Initializable {
     public ComboBox<Month> months;
     public ComboBox<Integer> years;
@@ -40,6 +43,11 @@ public class ReportsController implements Initializable {
     public Button report2;
     public Button report3;
 
+    /**
+     * This returns to the MainScreen.fxml file and clears the Appointments and Contacts.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
         ListModifications.clearAppointments();
         ListModifications.clearContacts();
@@ -48,6 +56,10 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * This runs Report1 and returns the total amount of appointments by month.
+     * @param actionEvent
+     */
     public void report1OnClicked(ActionEvent actionEvent) {
 
         ObservableList<Appointments> appointments = ListModifications.getAllAppointments();
