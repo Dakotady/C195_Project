@@ -66,6 +66,8 @@ public class CustomerInfoController implements Initializable {
             }
         }
 
+        ListModifications.clearCountries();
+
     }
 
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
@@ -80,8 +82,10 @@ public class CustomerInfoController implements Initializable {
 
         if (response) {
 
+            ListModifications.clearCountries();
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
         }
+
     }
 
 
