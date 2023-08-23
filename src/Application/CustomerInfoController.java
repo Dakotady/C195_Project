@@ -4,12 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the CustomerInfo.fxml file.
+ */
 public class CustomerInfoController implements Initializable {
     public TextField customerID;
     public TextField customerAddress;
@@ -21,6 +23,12 @@ public class CustomerInfoController implements Initializable {
     public Button confirm;
     public Button cancel;
 
+    /**
+     * This saves the new or modified customer information.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
         if (ReferencedMethods.getFormState().equals("add")) {
@@ -70,6 +78,11 @@ public class CustomerInfoController implements Initializable {
 
     }
 
+    /**
+     * This cancels the customer addition or modification.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
 
         boolean response;
@@ -88,7 +101,11 @@ public class CustomerInfoController implements Initializable {
 
     }
 
-
+    /**
+     * This sets the division names depending on what country is selected.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void stateOnShowing(Event actionEvent) throws SQLException {
 
         if (country.getSelectionModel().isEmpty()) {
@@ -107,6 +124,10 @@ public class CustomerInfoController implements Initializable {
 
     }
 
+    /**
+     * This will clear the divisions if the country is changed.
+     * @param actionEvent
+     */
     public void countryOnAction(ActionEvent actionEvent) {
 
         ListModifications.clearDivisions();

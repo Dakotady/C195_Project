@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,6 +13,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the the mainScreen.fxml.
+ */
 public class MainScreenController implements Initializable {
     public TableView appointmentTable;
     public TableColumn appointment_ID_Col;
@@ -40,11 +41,20 @@ public class MainScreenController implements Initializable {
     private Object Stage;
 
 
+    /**
+     * This closes the application.
+     * @param actionEvent
+     */
     public void exitOnClicked(ActionEvent actionEvent) {
 
         System.exit(1);
     }
 
+    /**
+     * This opens the AppointmentInfo.fxml and sets the formState to add.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
         ReferencedMethods.setFormState("add");
@@ -52,6 +62,11 @@ public class MainScreenController implements Initializable {
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/AppointmentInfo.fxml", 600, 500);
     }
 
+    /**
+     * This opens the AppointmentInfo.fxml, gets the selected appointment form the table, and sets the formState to modify.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void modifyAppointmentOnClicked(ActionEvent actionEvent) throws IOException {
 
         ReferencedMethods.setFormState("modify");
@@ -72,6 +87,11 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * This deletes the selected appointment.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void deleteAppointmentOnClicked(ActionEvent actionEvent) throws SQLException {
 
         Boolean response;
@@ -92,18 +112,34 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * This opens the CustomerOverview.fxml.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void customerListOnClicked(ActionEvent actionEvent) throws IOException {
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerOverview.fxml", 700, 550);
 
     }
 
+    /**
+     * This opens the Reports.fxml.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void reportsOnClicked(ActionEvent actionEvent) throws IOException {
 
         FileIO.readFile();
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/Reports.fxml", 1500, 500);
     }
+
 // Lambda
+
+    /**
+     * LAMBDA : This utilizes a Lambda expression that assets the creation of a filtered list that sorts by current appointments by week.
+     * @param actionEvent
+     */
     public void appointmentFilterWeekOnClicked(ActionEvent actionEvent) {
 
         Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
@@ -128,6 +164,10 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * LAMBDA : This utilizes a Lambda expression that assets the creation of a filtered list that sorts by current appointments by month.
+     * @param actionEvent
+     */
     public void appointmentFilterMonthOnClicked(ActionEvent actionEvent) {
         Timestamp currentTime = ReferencedMethods.getCurrentLocalTime();
 
@@ -150,6 +190,10 @@ public class MainScreenController implements Initializable {
 
     }
 
+    /**
+     * This returns all the appointments.
+     * @param actionEvent
+     */
     public void appointmentAllOnClicked(ActionEvent actionEvent) {
 
         appointment_ID_Col.setCellValueFactory(new PropertyValueFactory<Appointments, Integer>("appointmentID"));
@@ -165,6 +209,11 @@ public class MainScreenController implements Initializable {
         appointmentTable.setItems(ListModifications.getAllAppointments());
     }
 
+    /**
+     * LAMBDA: This will call the interface on the Main.java and will return a LocalDateTime. This will also check if there is an appointment within 15 min.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

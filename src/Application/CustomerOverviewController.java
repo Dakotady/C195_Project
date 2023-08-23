@@ -4,12 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the CustomerOverview.fxml file.
+ */
 public class CustomerOverviewController implements Initializable {
     public TableView customerTable;
     public TableColumn customerID_Col;
@@ -23,18 +25,32 @@ public class CustomerOverviewController implements Initializable {
     public Button deleteCustomer;
     public Button back;
 
-
+    /**
+     * This goes back to the MainScreen.fxml file.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void backOnClicked(ActionEvent actionEvent) throws IOException {
 
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);
     }
 
+    /**
+     * This opens the CustomerInfo.fxml file, and sets the FormState to add.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
         ReferencedMethods.setFormState("add");
         new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/CustomerInfo.fxml", 600, 300);
     }
 
+    /**
+     * This opens the CustomerInfo.fxml file, and gets the selected customer.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void modifyCustomerOnClicked(ActionEvent actionEvent) throws IOException {
 
         Customers selected = (Customers) customerTable.getSelectionModel().getSelectedItem();
@@ -54,6 +70,11 @@ public class CustomerOverviewController implements Initializable {
 
     }
 
+    /**
+     * This deletes the customer if it has no appointments.
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void deleteCustomerOnClicked(ActionEvent actionEvent) throws SQLException {
 
         Boolean customerExist;

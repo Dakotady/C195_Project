@@ -1,36 +1,35 @@
 package Application;
 
-import Connections.FileIO;
-import Connections.JavaDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
-public class Main extends Application implements Initializable {
+/**
+ * This class runs at the beginning of the application. The JavaDocs are located in a folder named JavaDocs located here: src/JavaDocs
+ */
+public class Main extends Application{
 
-    //Lambda
+    /**
+     * LAMBDA: This creates a Interface for the 2nd Lambda expression. The expression will return a LocalDateTime.
+     */
     public interface mainInterface {
 
         LocalDateTime passLocalDateTimeNow();
 
     }
 
-
+    /**
+     * This opens loginScreen.fxml.
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FxmlScreens/LoginScreen.fxml")));
@@ -40,7 +39,11 @@ public class Main extends Application implements Initializable {
 
     }
 
-
+    /**
+     * This is ran when the application if first ran. If the users pc is set to French it will set a ResourceBundle to convert the LoginScreen to French.
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
 
 
@@ -60,12 +63,5 @@ public class Main extends Application implements Initializable {
 
 
         launch(args);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
     }
 }

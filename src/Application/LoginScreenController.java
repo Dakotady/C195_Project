@@ -8,8 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,13 +30,19 @@ public class LoginScreenController implements Initializable {
     public String username;
     public String password;
 
-
+    /**
+     * This will exit the application.
+     */
     @FXML
-
     public void exitApplicationOnClicked() {
         System.exit(1);
     }
 
+    /**
+     * This will convert the text to French if the users language settings are set to French, and sets the ZoneID on the loginScreen.fxml.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         zoneID.setText(ReferencedMethods.getLocalTimeZone().getId().toString());
@@ -56,6 +60,12 @@ public class LoginScreenController implements Initializable {
         }
     }
 
+    /**
+     * This checks if the user can login or displays the appropriate error message.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void loginOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
         Boolean error = false;

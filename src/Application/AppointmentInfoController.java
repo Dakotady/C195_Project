@@ -4,7 +4,6 @@ package Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -12,6 +11,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the AppointmentInfo.fxml file.
+ */
 public class AppointmentInfoController implements Initializable {
     public TextField appointmentIDText;
     public TextField title;
@@ -27,6 +29,11 @@ public class AppointmentInfoController implements Initializable {
     public ComboBox userName;
     public TextField type;
 
+    /**
+     * This cancels the addition or modification of the appointment.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancelOnClicked(ActionEvent actionEvent) throws IOException {
         ListModifications.clearAppointments();
 
@@ -47,6 +54,12 @@ public class AppointmentInfoController implements Initializable {
 
     }
 
+    /**
+     * This saves either the addition or modification of the appointment.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void confirmOnClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
         if (ReferencedMethods.getFormState().equals("add")) {
@@ -70,7 +83,6 @@ public class AppointmentInfoController implements Initializable {
                     alert.showAndWait();
                 } else if (ReferencedMethods.checkForCustomerOverlaps(startCheck, endCheck, customerID)) {
 
-                    // Validate this works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("The current customer has an overlapping appointment.");
                     alert.showAndWait();

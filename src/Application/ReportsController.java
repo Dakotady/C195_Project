@@ -8,8 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-
-import javax.swing.text.StyledEditorKit;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.util.ResourceBundle;
 
 /**
@@ -89,6 +86,10 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * This gets all the appointments for each contact and displays them on the tableview.
+     * @param actionEvent
+     */
     public void report2OnClicked(ActionEvent actionEvent) {
 
         ObservableList<Appointments> appointments = ListModifications.getAllAppointments();
@@ -127,6 +128,11 @@ public class ReportsController implements Initializable {
 
     }
 
+    /**
+     * This reads the gets all the data from login_activity.txt and checks the datePicker to display how many failed attempts to login for the day selected.
+     * @param actionEvent
+     * @throws FileNotFoundException
+     */
     public void report3OnClicked(ActionEvent actionEvent) throws FileNotFoundException {
 
         try {
@@ -134,7 +140,7 @@ public class ReportsController implements Initializable {
 
             ObservableList<LoginActivity> loginActivities = ListModifications.getAllLoginActivity();
             ObservableList<LoginActivity> value = FXCollections.observableArrayList();
-            loginActivities.clear();
+            ListModifications.clearLoginActivity();
             FileIO.readFile();
 
             LocalDate localDate = datePicker.getValue();
