@@ -147,7 +147,7 @@ public class ReportsController implements Initializable {
 
             for (LoginActivity login : loginActivities) {
 
-                if (localDate.isEqual(login.localDateTime.toLocalDate()) && login.attempt == 0){
+                if (localDate.isEqual(login.localDateTime.toLocalDate()) && login.attempt.equals("unsuccessful login")){
 
                     value.add(login);
                 }

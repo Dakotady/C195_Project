@@ -118,7 +118,7 @@ public class LoginScreenController implements Initializable {
                 alert.showAndWait();
                 error = true;
 
-                FileIO.writeToFile(LocalDateTime.now(), 0);
+                FileIO.writeToFile(ReferencedMethods.getUserID(), LocalDateTime.now(), "unsuccessful login");
             }
             else if (loginValidation == -1){
 
@@ -133,7 +133,7 @@ public class LoginScreenController implements Initializable {
                 alert.showAndWait();
                 error = true;
 
-                FileIO.writeToFile(LocalDateTime.now(), 0);
+                FileIO.writeToFile(ReferencedMethods.getUserID(), LocalDateTime.now(), "unsuccessful login");
 
             }
             else{
@@ -148,7 +148,7 @@ public class LoginScreenController implements Initializable {
             ReferencedMethods.setUserInfo(username, userID);
             ReferencedMethods.setHasInitialized(false);
 
-            FileIO.writeToFile(LocalDateTime.now(), 1);
+            FileIO.writeToFile(ReferencedMethods.getUserID(), LocalDateTime.now(), "successful login");
 
 
             new ReferencedMethods().newStage(actionEvent, "/FxmlScreens/MainScreen.fxml", 1600, 800);

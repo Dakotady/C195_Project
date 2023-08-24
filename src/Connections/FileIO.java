@@ -22,7 +22,7 @@ public class FileIO {
      * @param attempt
      * @throws IOException
      */
-    public static void writeToFile(LocalDateTime localDateTime, int attempt) throws IOException {
+    public static void writeToFile(int userID, LocalDateTime localDateTime, String attempt) throws IOException {
 
         Timestamp utcTime = ReferencedMethods.ConvertToUTC(localDateTime, ReferencedMethods.getLocalTimeZone());
 
@@ -32,7 +32,7 @@ public class FileIO {
 
         PrintWriter pw = new PrintWriter(fw);
 
-        pw.println(utcTime + "/" + attempt);
+        pw.println(userID + "/" + utcTime + "/" + attempt);
 
         pw.close();
     }
@@ -56,13 +56,15 @@ public class FileIO {
             Scanner tempScanner = new Scanner(temp);
             tempScanner.useDelimiter("/");
 
+            int userID = Integer.parseInt(tempScanner.next());
+
             Timestamp fileDate = Timestamp.valueOf(tempScanner.next());
 
             LocalDateTime currentLocal = ReferencedMethods.localTimeConversion(fileDate, ZoneId.of("UTC"));
 
-            int attempt = Integer.parseInt(tempScanner.next());
+            String attempt = tempScanner.next();
 
-            LoginActivity loginActivity = new LoginActivity(attempt, currentLocal);
+            LoginActivity loginActivity = new LoginActivity(attempt, currentLocal, userID);
 
             ListModifications.addLoginActivity(loginActivity);
         }
